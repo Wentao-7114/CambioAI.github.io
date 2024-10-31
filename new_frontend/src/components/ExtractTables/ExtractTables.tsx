@@ -4,6 +4,8 @@ import './ExtractTables.css';
 import UploadInterface from '../UploadInterface';
 import ExtractTablesRightPanel_1 from './ExtractTablesRightPanel_1';
 import ExtractTablesRightPanel_2 from './ExtractTablesRightPanel_2';
+import { useLoading } from '../FileContext';
+import ExtractTablesResultDisplay from './ExtractTablesResultDisplay';
 // import axios from 'axios';
 
 
@@ -11,11 +13,13 @@ import ExtractTablesRightPanel_2 from './ExtractTablesRightPanel_2';
 
 interface ExtractTablesProps {
       isActive: boolean;
-      onFileChange: (file: File) => void; 
+      onFileChange: (file: File) => void;
+      Tables_apiResponse: any;
 }
 
 
-const ExtractTables: React.FC<ExtractTablesProps> = ({ isActive, onFileChange }) => {
+const ExtractTables: React.FC<ExtractTablesProps> = ({ isActive, onFileChange, Tables_apiResponse }) => {
+      const { isLoading } = useLoading();
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
@@ -53,14 +57,24 @@ const ExtractTables: React.FC<ExtractTablesProps> = ({ isActive, onFileChange })
     if (!isActive) return null;
 
     return (
-         
+
       <div ref={containerRef} className="split-container">
             <div className="ExtractTables_left_panel" style={{ width: `${leftWidth}%` }}>
-                Left Panel
+                  {isLoading ? (
+                  <div className='ExtractTables_loading_container'>
+
+                        <div className='ExtractTables_loading'>
+
+
+                        </div>
+                        <p>Extracting tables from the document...</p>
+                </div>)
+                :
+                        Tables_apiResponse ? <ExtractTablesResultDisplay content={Tables_apiResponse} /> : <p>No data available</p>}
             </div>
             <div className="ExtractTables_divider" onMouseDown={startResize}></div>
             <div className="ExtractTables_right_panel" style={{ width: `${100 - leftWidth}%` }}>
-                   
+
                   {showPanel === 1 ? (
                     <ExtractTablesRightPanel_1 onButtonClick={togglePanel} />
                         ) : (
@@ -69,15 +83,15 @@ const ExtractTables: React.FC<ExtractTablesProps> = ({ isActive, onFileChange })
                   <div className="ExtractTables_upload_interface">
                         <UploadInterface   onChange={handleFileChange}  />
                   </div>
-                  
+
             </div>
         </div>
 
 
 
 
-            
-        
+
+
     );
 };
 

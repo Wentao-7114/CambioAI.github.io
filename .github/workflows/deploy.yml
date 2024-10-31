@@ -1,0 +1,40 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: |
+          cd new_frontend
+          npm install
+          npm install --save-dev @babel/plugin-proposal-private-property-in-object
+
+      - name: Build
+        run: |
+          cd new_frontend
+          CI=false npm run build
+        env:
+          REACT_APP_AUTH0_DOMAIN: ${{ secrets.REACT_APP_AUTH0_DOMAIN }}
+          REACT_APP_AUTH0_CLIENT_ID: ${{ secrets.REACT_APP_AUTH0_CLIENT_ID }}
+          REACT_APP_DEPLOYED_STATE: ${{ secrets.REACT_APP_DEPLOYED_STATE }}
+          REACT_APP_LOCAL_SERVER_URL: ${{ secrets.REACT_APP_LOCAL_SERVER_URL }}
+          REACT_APP_LOCAL_SERVER_API_KEY: ${{ secrets.REACT_APP_LOCAL_SERVER_API_KEY }}
+          REACT_APP_DEPLOYED_SERVER_URL: ${{ secrets.REACT_APP_DEPLOYED_SERVER_URL }}
+          REACT_APP_DEPLOYED_SERVER_API_KEY: ${{ secrets.REACT_APP_DEPLOYED_SERVER_API_KEY }}
+          REACT_APP_AUTH0_LOGOUT_URL: ${{ secrets.REACT_APP_AUTH0_LOGOUT_URL }}
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./new_frontend/build

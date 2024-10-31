@@ -1,0 +1,107 @@
+.chatbot-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow: hidden;
+    padding: 0px 12px 12px 12px;
+}
+
+.messages-container {
+    flex: 1;
+    overflow: auto;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+}
+
+.message {
+    max-width: 70%;
+    margin: 4px 0;
+    padding: 10px;
+    border-radius: 12px;
+    word-wrap: break-word;
+}
+
+.user-message {
+    align-self: flex-end;
+    background-color: #F24822;
+    color: white;
+}
+
+.bot-message {
+    align-self: flex-start;
+    background-color: #e9ecef;
+    color: black;
+}
+
+.input-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding: 4px;
+}
+
+.message-input {
+    flex: 1;
+    min-width: 100px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+}
+
+.send-button {
+    min-width: 60px;
+    background-color: #F24822;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.send-button:hover {
+    background-color: #ff8000;
+}
+
+@media (max-width: 100px) {
+    .input-form {
+        flex-direction: column;
+    }
+
+    .message-input,
+    .send-button {
+        width: 100%;
+    }
+}
+/* Add these styles to your existing CSS file */
+.typing-indicator {
+    display: flex;
+    gap: 4px;
+    padding: 14px !important;
+    min-height: 0 !important;
+}
+
+.typing-indicator span {
+    width: 8px;
+    height: 8px;
+    background-color: #666;
+    border-radius: 50%;
+    animation: bounce 1.5s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) { animation-delay: 0s; }
+.typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+.typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes bounce {
+    0%, 60%, 100% {
+        transform: translateY(0);
+    }
+    30% {
+        transform: translateY(-4px);
+    }
+}

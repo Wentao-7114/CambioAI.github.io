@@ -1,0 +1,57 @@
+.extract-tables-result {
+    padding: 20px;
+    overflow: auto;
+    height: 100%;
+}
+
+.table-container {
+    margin-bottom: 1rem;
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.html-content table,
+.markdown-content table {
+    border-collapse: collapse;
+    width: 100%;
+    margin: 15px 0;
+    background-color: #ffffff;
+}
+
+.html-content th,
+.html-content td,
+.markdown-content th,
+.markdown-content td {
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+    text-align: left;
+}
+
+.html-content th,
+.markdown-content th {
+    background-color: #f5f5f5;
+    font-weight: 600;
+}
+
+.html-content tr:nth-child(even),
+.markdown-content tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.html-content tr:hover,
+.markdown-content tr:hover {
+    background-color: #f0f0f0;
+}
+
+.table-scroll-container {
+    overflow-x: auto;
+    max-width: 100%;
+}
+
+/* Ensure tables take up their full width */
+.table-scroll-container table {
+    width: 100%;
+    white-space: nowrap;
+}

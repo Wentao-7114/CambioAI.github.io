@@ -5,19 +5,21 @@ import UploadInterface from '../UploadInterface';
 import ExtractFullContentRightPanel_1 from './ExtractFullContentRightPanel_1';
 import ExtractFullContentRightPanel_2 from './ExtractFullContentRightPanel_2';
 import ReactMarkdown from 'react-markdown';
-import { useFileContext } from '../FileContext';
+import remarkGfm from 'remark-gfm';
+import { useLoading } from '../FileContext';
 
 
 
 
 interface ExtractFullContentProps {
       isActive: boolean;
-      onFileChange: (file: File) => void; 
+      onFileChange: (file: File) => void;
       FullContent_apiResponse: any;
 }
 
 
 const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFileChange, FullContent_apiResponse  }) => {
+      const { isLoading } = useLoading();
       const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
             if (event.target.files && event.target.files[0]) {
                   onFileChange(event.target.files[0]);
@@ -26,16 +28,16 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
       const [markdown, setMarkdown] = useState('');
       useEffect(() => {
             if (FullContent_apiResponse) {
-                setMarkdown(FullContent_apiResponse.output);
+                setMarkdown(FullContent_apiResponse);
             }
-        }, [FullContent_apiResponse]);    
+        }, [FullContent_apiResponse]);
       const [showPanel, setShowPanel] = useState(1);  // State to toggle panels
-      const togglePanel = () => {
+      const togglePanel = async () => {
             setShowPanel(showPanel === 1 ? 2 : 1);
       };
 
 
-      const [leftWidth, setLeftWidth] = useState(70); // Initial width in percentage
+      const [leftWidth, setLeftWidth] = useState(50); // Initial width in percentage
       const containerRef = useRef<HTMLDivElement>(null);
 
       const startResize = (event: React.MouseEvent) => {
@@ -61,37 +63,52 @@ const ExtractFullContent: React.FC<ExtractFullContentProps> = ({ isActive, onFil
     if (!isActive) return null;
 
     return (
-         
+
       <div ref={containerRef} className="split-container">
             <div className="ExtractFullContent_left_panel" style={{ width: `${leftWidth}%` }}>
-            {FullContent_apiResponse && (
+            {isLoading && (
+                  <div className='ExtractFullContent_loading_container'>
+
+                        <div className='ExtractFullContent_loading'>
+
+
+                        </div>
+                        <p>Extracting content from the document...</p>
+                </div>
+            )}
+            {FullContent_apiResponse && !isLoading && (
                     <div className='ExtractFullContent_markdown'>
-                         
-                        <ReactMarkdown>{markdown}</ReactMarkdown>
+
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>
                     </div>
                 )}
-               
+
             </div>
             <div className="ExtractFullContent_divider" onMouseDown={startResize}></div>
             <div className="ExtractFullContent_right_panel" style={{ width: `${100 - leftWidth}%` }}>
-                   
+
                   {showPanel === 1 ? (
+                        <>
                     <ExtractFullContentRightPanel_1 onButtonClick={togglePanel} />
+                    <div className="ExtractFullContent_upload_interface">
+                        <UploadInterface   onChange={handleFileChange}  />
+                  </div>
+                        </>
                         ) : (
                               <ExtractFullContentRightPanel_2 onButtonClick={togglePanel} />
                   )}
-                  <div className="ExtractFullContent_upload_interface">
+                  {/* <div className="ExtractFullContent_upload_interface">
                         <UploadInterface   onChange={handleFileChange}  />
-                  </div>
-                  
+                  </div> */}
+
             </div>
         </div>
 
 
 
 
-            
-        
+
+
     );
 };
 

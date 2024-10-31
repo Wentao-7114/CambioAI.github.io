@@ -1,18 +1,47 @@
+.ExtractFullContentRightPanel_2_container {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    gap: 8px;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    box-sizing: border-box;
+}
+
+.ExtractFullContentRightPanel_2_chatbot {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+    overflow-x: hidden;
+    word-wrap: break-word;
+    word-break: break-word;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.ExtractFullContentRightPanel_2_bottom {
+    position: relative;
+    margin-top: auto;
+    padding: 16px;
+    background-color: white;
+    border-top: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
 .ExtractFullContentRightPanel_2_checkbox_list {
       display: flex;
       flex-direction: column;
-      gap: 15px;  
+      gap: 15px;
       color: #F24822;
       font-family: Inter;
       font-size: 10px;
       font-weight: 400;
       line-height: 12.1px;
-       
+}
 
-
-      
-}    
-.ExtractFullContentRightPanel_2_extract_button  {     
+.ExtractFullContentRightPanel_2_extract_button  {
       margin-left: 5%;
       margin-right: 5%;
       margin-top: 20px;
@@ -25,14 +54,14 @@
       /* box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px; */
       background-color: #F24822;
       color: white;
-   
+
       cursor: pointer;
       transition: background-color 0.3s ease;
       font-family: Inter;
 font-size: 10px;
 font-weight: 700;
 line-height: 12.1px;
- 
+
 }
 
 .ExtractFullContentRightPanel_2_extract_button:hover {
@@ -54,7 +83,7 @@ line-height: 12.1px;
 font-size: 10px;
 font-weight: 400;
 line-height: 12.1px;
- 
+
 
 }
 
@@ -67,5 +96,5 @@ line-height: 12.1px;
 font-size: 10px;
 font-weight: 400;
 line-height: 12.1px;
- 
+
 }

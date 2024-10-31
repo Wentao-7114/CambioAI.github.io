@@ -20,13 +20,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Auth0Provider domain={domain} clientId={clientId}  
+    <Auth0Provider domain={domain} clientId={clientId}
     authorizationParams={{ redirect_uri: window.location.origin }}
     >
-    
-    
-    
-    <Router>
+
+
+
+    <Router basename={process.env.PUBLIC_URL}>
     <TourProvider>
         <Routes>
           <Route path="/" element={<App />} />
@@ -38,8 +38,8 @@ root.render(
 </Auth0Provider>
 
   </React.StrictMode>,
-  
-  
+
+
 );
 
 // If you want to start measuring performance in your app, pass a function
